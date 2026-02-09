@@ -26,15 +26,16 @@
   </div>
 
  
-<script>
+
+ <script>
 async function sendToAI() {
   const userText = document.getElementById("userInput").value;
   document.getElementById("responseBox").innerText = "Thinking...";
 
   try {
     const response = await axios.post(
-      "https://purple-water-6bca.mukundpanchware.workers.dev", 
-      { message: userText },
+      "https://purple-water-6bca.mukundpanchware.workers.dev",
+      { user_message: userText },
       { headers: { "Content-Type": "application/json" } }
     );
 
@@ -49,5 +50,6 @@ async function sendToAI() {
 
 </body>
 </html>
+
 
 
