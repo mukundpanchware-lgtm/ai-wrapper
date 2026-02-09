@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Simple AI Wrapper</title>
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <style>
+    body { font-family: Arial, sans-serif; padding:20px; background:#f2f2f2; }
+    .container { background:white; padding:20px; border-radius:15px; max-width:600px; margin:auto; box-shadow:0 0 10px rgba(0,0,0,0.1); }
+    textarea { width:100%; height:120px; padding:10px; margin-top:10px; border-radius:10px; border:1px solid #ccc; }
+    button { padding:12px 20px; border:none; background:#4CAF50; color:white; border-radius:10px; margin-top:10px; cursor:pointer; font-size:16px; }
+    button:hover { background:#45a049; }
+    #responseBox { margin-top:20px; padding:15px; background:#e9e9e9; border-radius:10px; min-height:80px; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Simple AI Wrapper App</h2>
+    <p>Type your question, and this wrapper will send it to an AI model.</p>
+
+    <textarea id="userInput" placeholder="Ask anything..."></textarea>
+    <button onclick="sendToAI()">Send</button>
+
+    <div id="responseBox">AI response will appear here...</div>
+  </div>
+
+  <script>
+    async function sendToAI() {
+      const userText = document.getElementById("userInput").value;
+      document.getElementById("responseBox").innerText = "Thinking...";
+
+      try {
+        // Replace YOUR_API_KEY with your actual OpenAI-compatible API key
+        const response = await axios.post("https://api.openai.com/v1/chat/completions", {
+          model: "gpt-3.5-turbo",
+          messages: [{ role: "user", content: userText }]
+        }, {
+          headers: { "Authorization": `Bearer YOUR_API_KEY` }
+        });
+
+        document.getElementById("responseBox").innerText = response.data.choices[0].message.content;
+      } catch (error) {
+        document.getElementById("responseBox").innerText = "Error: " + error;
+      }
+    }
+  </script>
+</body>
+</html>
