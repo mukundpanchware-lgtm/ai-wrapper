@@ -26,24 +26,26 @@
   </div>
 
   <script>
-    async function sendToAI() {
-      const userText = document.getElementById("userInput").value;
-      document.getElementById("responseBox").innerText = "Thinking...";
+async function sendToAI() {
+  const userText = document.getElementById("userInput").value;
+  document.getElementById("responseBox").innerText = "Thinking...";
 
-      try {
-        // Replace YOUR_API_KEY with your actual OpenAI-compatible API key
-        const response = await axios.post("https://api.openai.com/v1/chat/completions", {
-          model: "gpt-3.5-turbo",
-          messages: [{ role: "user", content: userText }]
-        }, {
-          headers: { "Authorization": `Bearer YOUR_API_KEY` }
-        });
+  try {
+    const response = await axios.post(
+      "https://purple-water-6bca.mukundpanchware.workers.dev",  // your worker backend
+      { message: userText },
+      { headers: { "Content-Type": "application/json" } }
+    );
 
-        document.getElementById("responseBox").innerText = response.data.choices[0].message.content;
-      } catch (error) {
-        document.getElementById("responseBox").innerText = "Error: " + error;
-      }
-    }
-  </script>
+    document.getElementById("responseBox").innerText =
+      response.data.choices[0].message.content;
+
+  } catch (error) {
+    document.getElementById("responseBox").innerText = "Error: " + error;
+  }
+}
+</script>
+
 </body>
 </html>
+
